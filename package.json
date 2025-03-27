@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"ci": "pnpm install --frozen-lockfile",
 		"build": "tsc",
 		"build:watch": "tsc --watch",
 		"dev": "vitest",
