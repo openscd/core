@@ -16,11 +16,16 @@ jobs:
         with:
           node-version: 'lts/*'
 
-      - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9
 
+          
       - name: Install dependencies
         run: pnpm ci
+          
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
 
       - name: Run Vitest tests
         run: pnpm test
