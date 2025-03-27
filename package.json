@@ -1,0 +1,22 @@
+{
+	"name": "@openscd/core",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "tsc",
+		"build:watch": "tsc --watch",
+		"dev": "vitest",
+		"test": "vitest --run"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"typescript": "^5.8.2",
+		"vitest": "^3.0.9"
+	},
+	"devDependencies": {
+		"vite": "^6.2.3"
+	}
+}
