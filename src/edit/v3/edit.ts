@@ -1,80 +1,80 @@
 /** Intent to `parent.insertBefore(node, reference)` */
-export type InsertV2 = {
+export type Insert = {
 	parent: Node;
 	node: Node;
 	reference: Node | null;
   };
   
   /** Intent to remove a `node` from its `ownerDocument` */
-  export type RemoveV2 = {
+  export type Remove = {
 	node: Node;
   };
   
   /** Intent to set the `textContent` of `element` */
-  export type SetTextContentV2 = {
+  export type SetTextContent = {
 	element: Element;
 	textContent: string;
   };
   
   /** Intent to set or remove (if `null`) `attributes`(-`NS`) on `element` */
-  export type SetAttributesV2 = {
+  export type SetAttributes = {
 	element: Element;
 	attributes: Partial<Record<string, string | null>>;
 	attributesNS: Partial<Record<string, Partial<Record<string, string | null>>>>;
   };
   
   /** Intent to change some XMLDocuments */
-  export type EditV2 =
-	| InsertV2
-	| SetAttributesV2
-	| SetTextContentV2
-	| RemoveV2
-	| EditV2[];
+  export type Edit =
+	| Insert
+	| SetAttributes
+	| SetTextContent
+	| Remove
+	| Edit[];
   
-  export function isComplexV2(edit: EditV2): edit is EditV2[] {
+  export function isComplex(edit: Edit): edit is Edit[] {
 	return edit instanceof Array;
   }
   
-  export function isSetTextContentV2(edit: EditV2): edit is SetTextContentV2 {
+  export function isSetTextContent(edit: Edit): edit is SetTextContent {
 	return (
-	  (edit as SetTextContentV2).element !== undefined &&
-	  (edit as SetTextContentV2).textContent !== undefined
+	  (edit as SetTextContent).element !== undefined &&
+	  (edit as SetTextContent).textContent !== undefined
 	);
   }
   
-  export function isRemoveV2(edit: EditV2): edit is RemoveV2 {
+  export function isRemove(edit: Edit): edit is Remove {
 	return (
-	  (edit as InsertV2).parent === undefined && (edit as RemoveV2).node !== undefined
+	  (edit as Insert).parent === undefined && (edit as Remove).node !== undefined
 	);
   }
   
-  export function isSetAttributesV2(edit: EditV2): edit is SetAttributesV2 {
+  export function isSetAttributes(edit: Edit): edit is SetAttributes {
 	return (
-	  (edit as SetAttributesV2).element !== undefined &&
-	  (edit as SetAttributesV2).attributes !== undefined &&
-	  (edit as SetAttributesV2).attributesNS !== undefined
+	  (edit as SetAttributes).element !== undefined &&
+	  (edit as SetAttributes).attributes !== undefined &&
+	  (edit as SetAttributes).attributesNS !== undefined
 	);
   }
   
-  export function isInsertV2(edit: EditV2): edit is InsertV2 {
+  export function isInsert(edit: unknown): edit is Insert {
 	return (
-	  (edit as InsertV2).parent !== undefined &&
-	  (edit as InsertV2).node !== undefined &&
-	  (edit as InsertV2).reference !== undefined
+	  (edit as Insert).parent !== undefined &&
+	  (edit as Insert).node !== undefined &&
+	  (edit as Insert).reference !== undefined
 	);
   }
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export function isEditV2(edit: any): edit is EditV2 {
-	if (isComplexV2(edit)) {
-	  return !edit.some((e) => !isEditV2(e));
+  export function isEdit(edit: any): edit is Edit {
+	if (isComplex(edit)) {
+	  return !edit.some((e) => !isEdit(e));
 	}
 	
 	return (
-	  isSetAttributesV2(edit) ||
-	  isSetTextContentV2(edit) ||
-	  isInsertV2(edit) ||
-	  isRemoveV2(edit)
+	  isSetAttributes(edit) ||
+	  isSetTextContent(edit) ||
+	  isInsert(edit) ||
+	  isRemove(edit)
 	);
   }
   

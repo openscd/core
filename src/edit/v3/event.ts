@@ -1,35 +1,27 @@
-import { EditV2 } from './edit.js';
+import { Edit } from './edit.js';
 
-export type EditDetailV2<E extends EditV2 = EditV2> = EditEventOptionsV2 & {
+export type EditDetail<E extends Edit = Edit> = EditEventOptions & {
   edit: E;
 };
 
-export type EditEventV2<E extends EditV2 = EditV2> = CustomEvent<
-  EditDetailV2<E>
->;
+export type EditEvent<E extends Edit = Edit> = CustomEvent<EditDetail<E>>;
 
-type BaseEditEventOptionsV2 = {
+type BaseEditEventOptions = {
   title?: string;
   squash?: boolean;
 }
 
-export type EditEventOptionsV2 = BaseEditEventOptionsV2 & {
+export type EditEventOptions = BaseEditEventOptions & {
   createHistoryEntry?: boolean;
 };
 
-export function newEditEventV2<E extends EditV2>(
+export function newEditEvent<E extends Edit>(
   edit: E,
-  options?: EditEventOptionsV2
-): EditEventV2<E> {
-  return new CustomEvent<EditDetailV2<E>>('oscd-edit-v2', {
+  options?: EditEventOptions
+): EditEvent<E> {
+  return new CustomEvent<EditDetail<E>>('oscd-edit-v2', {
     composed: true,
     bubbles: true,
     detail: { ...options, edit },
   });
-}
-
-declare global {
-  interface ElementEventMap {
-    ['oscd-edit-v2']: EditEventV2;
-  }
 }
