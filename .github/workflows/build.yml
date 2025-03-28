@@ -8,12 +8,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
           version: 10
           run_install: false
-		  
+
       - name: Restore node_modules cache
         uses: actions/cache@v3
         with:
@@ -21,9 +24,6 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
-
-      - name: Checkout oscd-plugins/main
-        uses: actions/checkout@v4
 
       - name: Build
         run: pnpm build
