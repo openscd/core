@@ -4,11 +4,14 @@ on:
     outputs:
       cache-key:
         description: "Cache key for node_modules"
-        value: ${{ steps.cache-node-modules.outputs.cache-hit }}
+        value: ${{ jobs.cache-and-install.outputs.cache-key }}
 
 jobs:
   cache-and-install:
     runs-on: ubuntu-latest
+
+    outputs:
+      cache-key: ${{ steps.cache-node-modules.outputs.cache-hit }}
 
     steps:
       - name: Checkout
