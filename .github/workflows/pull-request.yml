@@ -18,5 +18,5 @@ jobs:
 
   test:
     name: Run Tests
-    needs: build
+    needs: install
     uses: ./.github/workflows/test.yml
