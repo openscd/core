@@ -1,0 +1,29 @@
+name: "Build"
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout oscd-plugins/main
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: pnpm build
+
+      - name: Retrieve Version
+        id: version
+        run: echo "version=$(npm pkg get version)" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout oscd-plugins
+        uses: actions/checkout@v3
+        with:
+          repository: sprinteins/oscd-plugins
+          ref: gh-pages
+          path: build
+
+      - name: Publish
+        run: echo "TODO"
