@@ -1,0 +1,29 @@
+name: Publish Main
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  install:
+    name: Install Dependencies
+    uses: ./.github/workflows/_install.yml
+
+  build:
+    name: Build Project
+    needs: install
+    uses: ./.github/workflows/_build.yml
+
+  test:
+    name: Run Tests
+    needs: install
+    uses: ./.github/workflows/_test.yml
+
+  publish:
+    name: Publish to npm
+    needs:
+      - build
+      - test
+    uses: ./.github/workflows/_publish.yml

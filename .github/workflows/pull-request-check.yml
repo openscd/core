@@ -9,14 +9,14 @@ on:
 jobs:
   install:
     name: Install Dependencies
-    uses: ./.github/workflows/install.yml
+    uses: ./.github/workflows/_install.yml
 
   build:
     name: Build Project
     needs: install
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/_build.yml
 
   test:
     name: Run Tests
     needs: install
-    uses: ./.github/workflows/test.yml
+    uses: ./.github/workflows/_test.yml

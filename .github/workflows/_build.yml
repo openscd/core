@@ -3,10 +3,18 @@ name: Build
 on:
   workflow_dispatch:
   workflow_call:
+    outputs:
+      build-cache-key:
+        description: "Cache key for build output"
+        value: ${{ jobs.build.outputs.build-cache-key }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    outputs:
+      build-cache-key: ${{ steps.cache-build-output.outputs.cache-hit }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,9 +36,12 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Retrieve Version
-        id: version
-        run: echo "version=$(npm pkg get version)" >> "$GITHUB_OUTPUT"
+      - name: Cache build output
+        id: cache-build-output
+        uses: actions/cache@v3
+        with:
+          path: build
+          key: ${{ runner.os }}-build-output-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-output-
 
-      - name: Publish
-        run: echo "TODO"
