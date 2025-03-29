@@ -20,10 +20,13 @@ jobs:
       - name: Restore build output cache
         uses: actions/cache@v3
         with:
-          path: dist
+          path: build
           key: ${{ runner.os }}-build-output-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-build-output-
+
+      - name: DEBUG
+        run: ls -la build
 
       - name: Publish to npm
         env:
