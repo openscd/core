@@ -1,18 +1,5 @@
 import { expect, it, describe } from 'vitest'
-import { newEditEvent } from './event'
-import { Edit, isInsert, isRemove, isSetTextContent, isSetAttributes, isComplex, isEdit } from './edit'
-
-it('newEditEvent', () => {
-	const event = newEditEvent(
-		{
-			parent: document.createElement('div'),
-			node: document.createElement('span'),
-			reference: null,
-		},
-	)
-
-	console.log("event", event)
-})
+import { isInsert, isRemove, isSetTextContent, isSetAttributes, isComplex, isEdit } from './edit'
 
 describe('isInsert', () => {
 	type TestCase = {
