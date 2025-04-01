@@ -5,8 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"ci": "pnpm install --frozen-lockfile",
-		"build": "tsc",
-		"build:watch": "tsc --watch",
+		"build": "tsc src/*",
+		"build:watch": "pnpm run build -- --watch",
 		"dev": "vitest",
 		"test": "vitest --run",
 		"postinstall": "pnpm exec playwright install chromium"

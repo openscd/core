@@ -3,7 +3,7 @@ export type Insert = {
 	parent: Node;
 	node: Node;
 	reference: Node | null;
-  };
+};
   
   /** Intent to remove a `node` from its `ownerDocument` */
   export type Remove = {
@@ -31,24 +31,25 @@ export type Insert = {
 	| Remove
 	| Edit[];
   
-  export function isComplex(edit: Edit): edit is Edit[] {
+  export function isComplex(edit: unknown): edit is Edit[] {
 	return edit instanceof Array;
   }
   
-  export function isSetTextContent(edit: Edit): edit is SetTextContent {
+  export function isSetTextContent(edit: unknown): edit is SetTextContent {
 	return (
 	  (edit as SetTextContent).element !== undefined &&
 	  (edit as SetTextContent).textContent !== undefined
 	);
   }
   
-  export function isRemove(edit: Edit): edit is Remove {
+  export function isRemove(edit: unknown): edit is Remove {
 	return (
-	  (edit as Insert).parent === undefined && (edit as Remove).node !== undefined
+	  (edit as Insert).parent === undefined && 
+	  (edit as Remove).node !== undefined
 	);
   }
   
-  export function isSetAttributes(edit: Edit): edit is SetAttributes {
+  export function isSetAttributes(edit: unknown): edit is SetAttributes {
 	return (
 	  (edit as SetAttributes).element !== undefined &&
 	  (edit as SetAttributes).attributes !== undefined &&
@@ -65,7 +66,7 @@ export type Insert = {
   }
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export function isEdit(edit: any): edit is Edit {
+  export function isEdit(edit: unknown): edit is Edit {
 	if (isComplex(edit)) {
 	  return !edit.some((e) => !isEdit(e));
 	}
