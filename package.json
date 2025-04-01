@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"ci": "pnpm install --frozen-lockfile",
-		"build": "tsc src/*",
+		"build": "tsc src/index.ts --outDir build",
 		"build:watch": "pnpm run build -- --watch",
 		"dev": "vitest",
 		"test": "vitest --run",
