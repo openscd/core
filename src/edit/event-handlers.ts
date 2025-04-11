@@ -11,6 +11,7 @@ import {
 	isSetTextContent,
 } from './edit';
 
+
 /** Applies an Edit, returning the corresponding 'undo' Edit. */
 export function handleEdit(edit: Edit): Edit {
 	if (isInsert(edit)){ return handleInsert(edit); }
@@ -138,11 +139,11 @@ function handleSetAttributes({
 	}
 }
 
-return {
-	element,
-	attributes: oldAttributes,
-	attributesNS: oldAttributesNS,
-};
+	return {
+		element,
+		attributes: oldAttributes,
+		attributesNS: oldAttributesNS,
+	}
 }
 
 function handleRemove({ node }: Remove): Insert | [] {
