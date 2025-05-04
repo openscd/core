@@ -11,25 +11,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+          registry-url: 'https://registry.npmjs.org'
+
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
           version: 10
           run_install: false
 
-      - name: Restore build output cache
-        uses: actions/cache@v3
-        with:
-          path: build
-          key: ${{ runner.os }}-build-output-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-build-output-
-
-      - name: DEBUG
+      - name: Verify build output exists
         run: ls -la build
 
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: echo "dummy run"
-        # run: pnpm publish --access public
+        run: pnpm publish --access public --no-git-checks
