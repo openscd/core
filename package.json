@@ -4,6 +4,10 @@
 	"description": "",
 	"main": "index.js",
 	"type": "module",
+	"files": [
+		"build/",
+		"Readme.md"
+	],
 	"scripts": {
 		"ci": "pnpm install --frozen-lockfile",
 		"build": "tsc",
