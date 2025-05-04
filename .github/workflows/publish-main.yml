@@ -33,3 +33,5 @@ jobs:
       - check-version
     if: needs.check-version.outputs.version_changed == 'true'
     uses: ./.github/workflows/_publish.yml
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
