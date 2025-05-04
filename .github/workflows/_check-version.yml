@@ -1,0 +1,38 @@
+name: Check Version
+
+on:
+  workflow_call:
+    outputs:
+      version_changed:
+        description: "Whether the package version has changed"
+        value: ${{ jobs.check.outputs.version_changed }}
+
+jobs:
+  check:
+    name: Check Package Version
+    runs-on: ubuntu-latest
+    outputs:
+      version_changed: ${{ steps.check.outputs.version_changed }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Check if package version changed
+        id: check
+        run: |
+          # Get the current version from package.json
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "Current version: $CURRENT_VERSION"
+          
+          # Check the latest published version on npm
+          PUBLISHED_VERSION=$(npm view @openscd/core version 2>/dev/null || echo "0.0.0")
+          echo "Latest published version: $PUBLISHED_VERSION"
+          
+          # Compare versions
+          if [ "$CURRENT_VERSION" != "$PUBLISHED_VERSION" ]; then
+            echo "Version has changed: $PUBLISHED_VERSION -> $CURRENT_VERSION"
+            echo "version_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "Version unchanged"
+            echo "version_changed=false" >> $GITHUB_OUTPUT
+          fi
