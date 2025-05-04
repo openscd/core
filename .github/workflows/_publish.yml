@@ -17,6 +17,14 @@ jobs:
           node-version: 'latest'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Restore build output cache
+        uses: actions/cache@v3
+        with:
+          path: build
+          key: ${{ runner.os }}-build-output-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-output-
+
       - name: Verify build output exists
         run: ls -la build
 
