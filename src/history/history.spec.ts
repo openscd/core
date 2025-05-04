@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { createHistoryTracker, HistoryTracker } from "./history";
+import { createHistoryTracker, type HistoryTracker } from "./history";
 
 describe('History', () => {
 	type TestCase = {

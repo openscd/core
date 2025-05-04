@@ -27,6 +27,7 @@ export function createHistoryTracker<T>(
 	function undo(n = 1) {
 		if (!canUndo() || n < 1) { return }
 		
+		// biome-ignore lint/style/noNonNullAssertion: <explanation>
 		performEdit(history[last()!].undo)
 		editCount -= 1
 		updateVersion()

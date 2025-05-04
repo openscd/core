@@ -3,10 +3,11 @@
 	"version": "0.2.0",
 	"description": "",
 	"main": "index.js",
+	"type": "module",
 	"scripts": {
 		"ci": "pnpm install --frozen-lockfile",
-		"build": "tsc src/index.ts --outDir build",
-		"build:watch": "pnpm run build -- --watch",
+		"build": "tsc",
+		"build:watch": "npm run build -- --watch",
 		"dev": "vitest",
 		"test": "vitest --run",
 		"postinstall": "pnpm exec playwright install chromium"

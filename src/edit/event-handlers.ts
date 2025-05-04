@@ -92,6 +92,7 @@ function handleSetAttributes({
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	Object.entries(attributesNS).forEach(([ns, attrs]) => {
 		// biome-ignore lint/complexity/noForEach: <explanation>
+		// biome-ignore lint/style/noNonNullAssertion: <explanation>
 		Object.keys(attrs!)
 		.filter(validName)
 		.reverse()
@@ -103,6 +104,7 @@ function handleSetAttributes({
 			};
 		});
 		// biome-ignore lint/complexity/noForEach: <explanation>
+		// biome-ignore lint/style/noNonNullAssertion: <explanation>
 		Object.keys(attrs!)
 		.filter((name) => !validName(name))
 		.forEach((name) => {
@@ -123,6 +125,7 @@ function handleSetAttributes({
 		try {
 			const [name, value] = entry as [string, string | null];
 			if (value === null) {
+				// biome-ignore lint/style/noNonNullAssertion: <explanation>
 				element.removeAttributeNS(ns, name.split(':').pop()!);
 			} else {
 				let qualifiedName = name;
@@ -134,6 +137,7 @@ function handleSetAttributes({
 				element.setAttributeNS(ns, qualifiedName, value);
 			}
 		} catch (_e) {
+			// biome-ignore lint/style/noNonNullAssertion: <explanation>
 			delete oldAttributesNS[ns]![entry[0]];
 		}
 	}
