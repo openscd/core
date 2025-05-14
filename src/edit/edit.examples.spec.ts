@@ -21,6 +21,7 @@ describe('Edit API Examples', () => {
 		// ACT
 		const newIED = scl.createElement('IED')
 		const insertNewIED: Edit = {
+			// biome-ignore lint/style/noNonNullAssertion: <explanation>
 			parent: scl.querySelector('SCL')!,
 			node: newIED,
 			reference: null,
@@ -51,8 +52,10 @@ describe('Edit API Examples', () => {
 		`)
 
 		// ACT
+		// biome-ignore lint/style/noNonNullAssertion: <explanation>
 		const iedToRemove = actualSCL.querySelector('IED[name="firstIED"]')!
 		const removeIED: Edit = {
+			// biome-ignore lint/style/noNonNullAssertion: <explanation>
 			node: iedToRemove!,
 			parent: undefined,
 			reference: null,
@@ -83,6 +86,7 @@ describe('Edit API Examples', () => {
 		`)
 
 		// ACT
+		// biome-ignore lint/style/noNonNullAssertion: <explanation>
 		const iedToModify = actualSCL.querySelector('IED[name="firstIED"]')!
 		const setAttributes: SetAttributes = {
 			element: iedToModify,

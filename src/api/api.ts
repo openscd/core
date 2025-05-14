@@ -1,22 +1,24 @@
-import { handleEdit as _handleEdit } from "../edit/event-handlers"
+import { handleEdit } from "../edit/event-handlers"
 import { createHistoryTracker } from "../history/history"
-import { Edit } from "../edit/edit"
+import type { Edit } from "../edit/edit"
 
-export function createApi(){
+export function createAPI(){
 
-	const historyTracker = createHistoryTracker<Edit>(handleEdit)
+	const historyTracker = createHistoryTracker<Edit>(handleIntent)
 
 	return {
-		handleEdit,
+		handleIntent,
 		undo: historyTracker.undo,
 		redo: historyTracker.redo,
 		canUndo: historyTracker.canUndo,
 		canRedo: historyTracker.canRedo,
-		editCount: historyTracker.editCount,
+		get editCount(){ return historyTracker.editCount },
 	}
 
-	function handleEdit(edit: Edit) {
-		const undo = _handleEdit(edit)
+	function handleIntent(edit: Edit) {
+		const undo = handleEdit(edit)
 		historyTracker.newHistoryEntry(undo, edit)
 	  }
 }
+
+export type API = ReturnType<typeof createAPI>

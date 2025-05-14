@@ -1,6 +1,12 @@
 import { expect, it, describe } from 'vitest';
 import { handleEdit } from './event-handlers.js';
-import { Edit, Insert, Remove, SetAttributes, SetTextContent } from './edit.js';
+import { 
+	Remove, 
+	type Edit, 
+	type Insert, 
+	type SetAttributes, 
+	type SetTextContent,
+} from './edit.js';
 
 describe('Edit API Handlers', () => {
 
@@ -21,6 +27,7 @@ describe('Edit API Handlers', () => {
 					const newIED = scl.createElement('IED')
 					newIED.setAttribute('name', 'newIED')
 					const intent: Insert = {
+						// biome-ignore lint/style/noNonNullAssertion: <explanation>
 						parent: scl.querySelector('SCL')!,
 						node: newIED,
 						reference: null,
